@@ -12,11 +12,13 @@ static int shmid = 0;
 int ist_primzahl(unsigned x)
 {
     int i;
-    if (x < 2) return 0;
-    for (i = 2; i * i <= x; ++i) {
-        if ((x % i) == 0) {
+    if (x < 2) 
+        return 0;
+
+    for (i = 2; i * i <= x; ++i)
+    {
+        if ((x % i) == 0)
             return 0;
-        }
     }
     return 1;
 }
@@ -32,8 +34,10 @@ void produziere_primzahlen()
     shm->primzahl = 0;
 
     /* endlos Primzahlen produzieren ... */
-    for (i = 1; ; ++i) {
-        if (!ist_primzahl(i)) continue;
+    for (i = 1; ; ++i)
+    {
+        if (!ist_primzahl(i)) 
+            continue;
 
         p(sid, 1);
 
