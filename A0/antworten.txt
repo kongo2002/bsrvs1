@@ -1,0 +1,14 @@
+1)  der Parameter -R listet auch die Dateien in Unterverzeichnissen
+
+2)  wc -l zaehlt die Zeilen einer Textdatei
+
+    /etc/group hat 53 Zeilen
+
+3)  der Abstand der beiden double Variablen ist 8 Byte gross, da eine 
+    Variable vom Typ double 64 Bit gross ist
+    die Adresse der ersten Variable ist groesser, da die Adressen
+    nach LIFO verteilt werden
+
+4)  globale Variablen werden im BSS (block storage segment) oder im
+    Datensegment abgelegt.
+    lokale Variablen werden auf dem Stack abgelegt.

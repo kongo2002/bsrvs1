@@ -1,0 +1,19 @@
+zu 2.1:
+
+1)  der Prozess befindet sich im sog. zombie Status
+    z.B. in #ps durch <defunct> gekennzeichnet
+    
+
+2)  fork:   teilt den aktuellen Prozess und erzeugt einen Child-Prozess
+    wait:   wartet auf die Terminierung eines Childs
+    execlp: ersetzt den aktuellen Speicher mit dem auszufuehrenden Programm-
+            code
+    exit:   beendet den aktuellen Prozess und gibt den Status an den Parent-
+            Prozess zurueck
+
+zu 2.2:
+
+Das Programm wartet auf eine zulaessige Eingabe von Wartezeit und
+auszufuehrenden Programmbefehl und ersetzt sich quasi selber durch den
+neuen Programmcode. Aus dem Grund ist die Endlosschleife im dem Fall auch
+nicht noetig/anwendbar. 
