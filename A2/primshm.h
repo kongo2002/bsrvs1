@@ -4,9 +4,18 @@
 #include <sys/ipc.h>
 #include <sys/shm.h>
 
-struct prim_shm {
+#ifndef BUFFER
+struct prim_shm
+{
 	unsigned int primzahl;
 };
+#else
+#define BUFFER_SIZE 100
+struct prim_shm
+{
+    unsigned int primzahl[BUFFER_SIZE];
+};
+#endif
 
 /* Shared-Memory-Operationen */
 int prim_shm_get();
