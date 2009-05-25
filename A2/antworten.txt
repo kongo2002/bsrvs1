@@ -7,4 +7,4 @@
     primserv, da primserv in der Zeit, waehrend primeat "schlaeft"
     den Wert shm->primzahl staendig ueberschreibt/erhoeht.
 
-3. dies ist ein test
+3.  Dies ist ein Test
