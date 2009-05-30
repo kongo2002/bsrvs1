@@ -6,6 +6,7 @@
 
 int main()
 {
+    unsigned j;
 
     /* Semaphore und Shared Memory einrichten */
     int shmid = prim_shm_get();
@@ -20,7 +21,12 @@ int main()
     {
         p(sid, 0);
 
+#ifndef BUFFER
         printf("primeat: Primzahl %u konsumiert!\n", shm->primzahl);
+#else
+        for (j=0; j<BUFFER_SIZE; ++j)
+            printf("primeat: Primzahl %u konsumiert!\n", shm->primzahl[j]);
+#endif
 
         v(sid, 1);
 

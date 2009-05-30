@@ -27,13 +27,14 @@ int ist_primzahl(unsigned x)
 void produziere_primzahlen()
 {
     struct prim_shm *shm = NULL;
-    unsigned i;
+    unsigned i, j;
 
     /* Shared-Memory-Segment einbinden und initialisieren */
     shm = (struct prim_shm *) prim_shm_attach(shmid);
-    shm->primzahl=1; 
+    
+#ifndef BUFFER
+    shm->primzahl=0; 
 
-    /* endlos Primzahlen produzieren ... */
     for (i = 1; ; ++i)
     {
         if (!ist_primzahl(i)) 
@@ -46,6 +47,30 @@ void produziere_primzahlen()
 
         v(sid, 0);
     }
+#else
+    for (i=0; i<BUFFER_SIZE; ++i)
+        shm->primzahl[i] = 0;
+
+    i = 0;
+
+    while (1)
+    {
+        j = 0;
+
+        p(sid, 1);
+
+        while (j < BUFFER_SIZE)
+        {
+            if (!ist_primzahl(++i)) 
+                continue;
+
+            printf("primserv: Primzahl %u produziert!\n", i);
+            shm->primzahl[j++] = i;
+        }
+
+        v(sid, 0);
+    }
+#endif
 }
 
 int main(void)
