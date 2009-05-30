@@ -6,6 +6,7 @@
 
 int main()
 {
+
     /* Semaphore und Shared Memory einrichten */
     int shmid = prim_shm_get();
 
