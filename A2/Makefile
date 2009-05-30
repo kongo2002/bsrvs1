@@ -18,3 +18,4 @@ test: all
 	./primeat
 
 .PHONY: clean test
+
