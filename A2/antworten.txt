@@ -3,14 +3,16 @@
     und die Aenderungszeitstempel der Quelldateien. So erkennt es 
     welche Dateien neu kompiliert werden muessen.
 
-
 2.  Es fehlen in der Ausgabe von primeat sehr viele Primzahlen von 
     primserv, da primserv in der Zeit, waehrend primeat "schlaeft"
     den Wert shm->primzahl staendig ueberschreibt/erhoeht.
 
-
-3. Um mit mehreren Elementen zu arbeiten, müssen wir in der Datei "primshm.h" dafür sorgen, 
-dass mehr als eine Primzahl zwischengespeichert werden kann. Dazu könnte man aus der Variablen "prim_shm" 
-z.B. eine verkettete Liste oder ein Array machen. Die nun veränderte Datenstruktur muß in die Primserv und primeat 
-Dateien integriert werden, um den Speicher auch ansprechen zu können. Auch muß der Aufruf der P und V Funktionen so 
-verändert werden, dass die Liste oder das Array vollgeschrieben werden, bevor der Prozess geblockt/freigegeben wird.  
+3.  Um mit mehreren Elementen zu arbeiten, muessen wir in der Datei
+    "primshm.h" dafuer sorgen, dass mehr als eine Primzahl
+    zwischengespeichert werden kann. Dazu koennte man aus der
+    Variablen "prim_shm" z.B. eine verkettete Liste oder ein Array
+    machen. Die nun veraenderte Datenstruktur muss in die Primserv
+    und primeat Dateien integriert werden, um den Speicher auch
+    ansprechen zu koennen. Auch muss der Aufruf der P und V Funktionen
+    so veraendert werden, dass die Liste oder das Array vollgeschrieben
+    werden, bevor der Prozess geblockt/freigegeben wird.  
