@@ -31,7 +31,7 @@ void produziere_primzahlen()
 
     /* Shared-Memory-Segment einbinden und initialisieren */
     shm = (struct prim_shm *) prim_shm_attach(shmid);
-    shm->primzahl = 0;
+    shm->primzahl=1; 
 
     /* endlos Primzahlen produzieren ... */
     for (i = 1; ; ++i)

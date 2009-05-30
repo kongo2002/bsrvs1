@@ -23,3 +23,4 @@ int prim_shm_get();
 void *prim_shm_attach(int shmid);
 
 #endif
+

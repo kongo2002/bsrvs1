@@ -4,7 +4,7 @@
 #include <sys/shm.h>
 
 #include "primshm.h"
-
+ 
 /* shared memory operationen */
 int prim_shm_get()
 {
