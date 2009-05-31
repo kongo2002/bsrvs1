@@ -33,7 +33,7 @@ void produziere_primzahlen()
     shm = (struct prim_shm *) prim_shm_attach(shmid);
     
 #ifndef BUFFER
-    shm->primzahl=0; 
+    shm->primzahl = 1; 
 
     for (i = 1; ; ++i)
     {
