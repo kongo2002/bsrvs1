@@ -33,7 +33,7 @@ int main()
 	Damit der Vater (Kreuzung) weiss, dass er der Vater ist, speichern wir an dieser Stelle die PID.*/
 	vaterpid = getpid();
 
-  /*HIER MUSS EUER CODE EINGEFUEGT WERDEN*/
+    /* TODO: Semaphoren initialisieren */
 
 	for (i = 0; i < ANZAHL_AUTOS; i++)
 	{
@@ -43,32 +43,39 @@ int main()
 	
 	vater();
 
-
-return 0;
+    return 0;
 }
 
 void vater()
 {
-	
-  /*HIER MUSS EUER CODE EINGEFUEGT WERDEN*/
+	printf("Vater hat alle 4 Autos erstellt.\n");
+
+    while (1)
+        sleep(1);
 	
 }
 
 void kind(int pos)
 {
+    int semid;
+    enum STATUS state = HERANFAHREN;
 
     while (1)
     {
         /* Wagen steht an der Kreuzung */
+        state = WARTEN;
+        printf("Auto %d steht an der Kreuzung.\n", pos);
 
         /* vergewissern, ob Strasse frei */
         sleep(3);
+        printf("Auto %d hat geschaut, ob rechts frei ist.\n", pos);
 
         /* claimen der entsprechenden Strassenabschnitte */
         p(semid, pos);
         p(semid, (pos+1)%4);
 
         /* Ueberqueren der Strasse */
+        state = FAHREN;
         printf("Auto %d ueberquert die Strasse.\n", pos);
 
         /* Freigabe der entsprechenden Strassenabschnitte */
@@ -76,9 +83,9 @@ void kind(int pos)
         v(semid, (pos+1)%4);
 
         /* Zurueckkehren zur Kreuzung */
+        state = HERANFAHREN;
         sleep(3);
     }
-	
 }
 
 void programmabbruch(int sig)
@@ -86,7 +93,18 @@ void programmabbruch(int sig)
 	/*Pruefen, ob wir im Vater sind*/
 	if (vaterpid == getpid())
 	{	
-  /*HIER MUSS EUER CODE EINGEFUEGT WERDEN*/
+        int i;
+        for (i=0; i<ANZAHL_AUTOS; ++i)
+        {
+            kill(9, autopids[i]);
+            printf("Auto %d gekillt.\n", i);
+        }
+
+        /* TODO: Zombies entfernen
+         * waitpid() */
+
+        printf("Programm abgebrochen.\n");
+        exit(1);
 	}
 }
 
@@ -107,5 +125,4 @@ int erzeugeauto(int pos)
 	{
 		return pid;
 	}
-
 }
