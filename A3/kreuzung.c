@@ -57,7 +57,27 @@ void vater()
 void kind(int pos)
 {
 
-  /*HIER MUSS EUER CODE EINGEFUEGT WERDEN*/
+    while (1)
+    {
+        /* Wagen steht an der Kreuzung */
+
+        /* vergewissern, ob Strasse frei */
+        sleep(3);
+
+        /* claimen der entsprechenden Strassenabschnitte */
+        p(semid, pos);
+        p(semid, (pos+1)%4);
+
+        /* Ueberqueren der Strasse */
+        printf("Auto %d ueberquert die Strasse.\n", pos);
+
+        /* Freigabe der entsprechenden Strassenabschnitte */
+        v(semid, pos);
+        v(semid, (pos+1)%4);
+
+        /* Zurueckkehren zur Kreuzung */
+        sleep(3);
+    }
 	
 }
 
