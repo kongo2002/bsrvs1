@@ -5,14 +5,12 @@
 #include <sys/wait.h>
 
 #define ANZAHL_AUTOS 4
-
 int autopids[ANZAHL_AUTOS];
 enum STATUS {FAHREN,HERANFAHREN,WARTEN};
 void programmabbruch(int);
 int erzeugeauto(int);
 void kind(int);
 void vater();
-int deadlock_observer();
 
 int vaterpid = 0;
 int semid = 0;
@@ -63,14 +61,8 @@ void vater()
     printf("Vater hat alle 4 Autos erstellt.\n");
 
     while (1)
-    {
-        if (deadlock_observer())
-            printf("DEADLOCK\n");
-        else
-            printf("NO DEADLOCK\n");
-
-        sleep(5);
-    }
+        sleep(1);
+    
 }
 
 void kind(int pos)
@@ -151,22 +143,4 @@ int erzeugeauto(int pos)
     {
         return pid;
     }
-}
-
-int deadlock_observer()
-{
-    int i;
-
-    /* warten alle Autos? */
-    for (i=0; i<ANZAHL_AUTOS; ++i)
-    {
-        if (get_sem(semid, i))
-            return 0;
-    }
-
-    /* ist kein Auto auf der Kreuzung? */
-    if (!get_sem(semid, ANZAHL_AUTOS))
-        return 0;
-
-    return 1;
 }
