@@ -13,6 +13,7 @@ void kind(int);
 void vater();
 
 int vaterpid = 0;
+int semid = 0;
 
 int main()
 {
@@ -33,12 +34,21 @@ int main()
     Damit der Vater (Kreuzung) weiss, dass er der Vater ist, speichern wir an dieser Stelle die PID.*/
     vaterpid = getpid();
 
-    /* TODO: Semaphoren initialisieren */
+    /* Semaphoren initialisieren */
+    semid = erzeuge_sem(4, 0xaffe);
+    
+    if (semid == -1)
+    {
+        fprintf(stderr, "semaphore already used.\n");
+        exit(-1);
+    }
+
+    init_sem(semid, 4, 1);
 
     for (i = 0; i < ANZAHL_AUTOS; i++)
     {
         autopids[i] = erzeugeauto(i);
-        sleep(1);
+        /*sleep(1);*/
     }   
     
     vater();
@@ -57,7 +67,6 @@ void vater()
 
 void kind(int pos)
 {
-    int semid;
     enum STATUS state = HERANFAHREN;
 
     while (1)
@@ -68,22 +77,26 @@ void kind(int pos)
 
         /* vergewissern, ob Strasse frei */
         sleep(3);
-        printf("Auto %d hat geschaut, ob rechts frei ist.\n", pos);
+        printf("Auto %d wartet auf freie Fahrt.\n", pos);
 
         /* claimen der entsprechenden Strassenabschnitte */
         p(semid, pos);
         p(semid, (pos+1)%4);
+        printf("Auto %d: claim of %d and %d.\n", pos, pos, (pos+1)%4);
 
         /* Ueberqueren der Strasse */
         state = FAHREN;
         printf("Auto %d ueberquert die Strasse.\n", pos);
+        sleep(4);
 
         /* Freigabe der entsprechenden Strassenabschnitte */
         v(semid, pos);
         v(semid, (pos+1)%4);
+        printf("Auto %d hat die Strasse ueberquert.\n", pos);
 
         /* Zurueckkehren zur Kreuzung */
         state = HERANFAHREN;
+        printf("Auto %d kehrt zur Kreuzung zurueck.\n", pos);
         sleep(3);
     }
 }
@@ -96,12 +109,12 @@ void programmabbruch(int sig)
         int i;
         for (i=0; i<ANZAHL_AUTOS; ++i)
         {
-            kill(9, autopids[i]);
+            kill(autopids[i], SIGTERM);
             printf("Auto %d gekillt.\n", i);
         }
 
-        /* TODO: Zombies entfernen
-         * waitpid() */
+        semctl(semid, 0, IPC_RMID);
+        printf("semaphore %d removed.\n", semid);
 
         printf("Programm abgebrochen.\n");
         exit(1);
