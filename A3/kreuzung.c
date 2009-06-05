@@ -48,7 +48,7 @@ int main()
     for (i = 0; i < ANZAHL_AUTOS; i++)
     {
         autopids[i] = erzeugeauto(i);
-        /*sleep(1);*/
+        sleep(1);
     }   
     
     vater();
@@ -82,7 +82,6 @@ void kind(int pos)
         /* claimen der entsprechenden Strassenabschnitte */
         p(semid, pos);
         p(semid, (pos+1)%4);
-        printf("Auto %d: claim of %d and %d.\n", pos, pos, (pos+1)%4);
 
         /* Ueberqueren der Strasse */
         state = FAHREN;
