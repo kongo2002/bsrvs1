@@ -75,3 +75,14 @@ void set_sem(int semid,int pos, int value)
         perror("semctl");
     }
 }
+
+/* Wert eines Semaphors auslesen */
+int get_sem(int semid,int pos)
+{
+    int rc = semctl(semid, pos, GETVAL);
+
+    if (rc == -1)
+        perror("semctl");
+
+    return rc;
+}

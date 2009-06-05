@@ -35,7 +35,7 @@ int main()
     vaterpid = getpid();
 
     /* Semaphoren initialisieren */
-    semid = erzeuge_sem(4, 0xaffe);
+    semid = erzeuge_sem(ANZAHL_AUTOS+1, 0xaffe);
     
     if (semid == -1)
     {
@@ -43,7 +43,7 @@ int main()
         exit(-1);
     }
 
-    init_sem(semid, 4, 1);
+    init_sem(semid, ANZAHL_AUTOS+1, 1);
 
     for (i = 0; i < ANZAHL_AUTOS; i++)
     {
@@ -73,24 +73,28 @@ void kind(int pos)
     {
         /* Wagen steht an der Kreuzung */
         state = WARTEN;
+        p(semid, pos);
         printf("Auto %d steht an der Kreuzung.\n", pos);
 
         /* vergewissern, ob Strasse frei */
-        sleep(3);
-        printf("Auto %d wartet auf freie Fahrt.\n", pos);
+        do
+        {
+            sleep(3);
+            printf("Auto %d wartet auf freie Fahrt.\n", pos);
+        }
+        while (get_sem(semid, (pos+1)%4) == 0 || get_sem(semid, ANZAHL_AUTOS) == 0);
 
         /* claimen der entsprechenden Strassenabschnitte */
-        p(semid, pos);
-        p(semid, (pos+1)%4);
+        p(semid, ANZAHL_AUTOS);
 
         /* Ueberqueren der Strasse */
         state = FAHREN;
         printf("Auto %d ueberquert die Strasse.\n", pos);
-        sleep(4);
+        sleep(1);
 
         /* Freigabe der entsprechenden Strassenabschnitte */
         v(semid, pos);
-        v(semid, (pos+1)%4);
+        v(semid, ANZAHL_AUTOS);
         printf("Auto %d hat die Strasse ueberquert.\n", pos);
 
         /* Zurueckkehren zur Kreuzung */

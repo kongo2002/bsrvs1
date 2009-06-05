@@ -26,4 +26,6 @@ void p(int semid,int pos);
 void v(int semid,int pos);
 /*Semaphore auf einen Wert setzen*/
 void set_sem(int semid,int pos, int value);
+/*Wert eines Semaphors auslesen */
+int get_sem(int semid, int pos);
 #endif
