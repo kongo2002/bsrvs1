@@ -3,7 +3,7 @@
 #include <signal.h>
 #include <stdlib.h>
 #include <sys/wait.h>
-
+ 
 #define ANZAHL_AUTOS 4
 
 int autopids[ANZAHL_AUTOS];

@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <sys/wait.h>
 
-#define ANZAHL_AUTOS 3
+#define ANZAHL_AUTOS 4
 int autopids[ANZAHL_AUTOS];
 enum STATUS {FAHREN,HERANFAHREN,WARTEN};
 void programmabbruch(int);
@@ -58,7 +58,7 @@ int main()
 
 void vater()
 {
-    printf("Vater hat alle 4 Autos erstellt.\n");
+    printf("Vater hat alle Autos erstellt.\n");
 
     while (1)
         sleep(1);

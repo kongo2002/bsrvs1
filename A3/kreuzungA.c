@@ -50,7 +50,7 @@ int main()
         autopids[i] = erzeugeauto(i);
         sleep(1);
     }   
-    
+     
     vater();
 
     return 0;
