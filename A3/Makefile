@@ -5,7 +5,7 @@ CC=gcc
 CFLAGS=-Wall
 # Optional die harten Falgs
 CFLAGS_HARD=-Werror -ansi -pedantic -D_XOPEN_SOURCE -D_POSIX_SOURCE
-
+ 
 # Targets
 kreuzungA: kreuzungA.c sync.c sync.h
 	$(CC) $(CFLAGS) -o kreuzungA kreuzungA.c sync.c

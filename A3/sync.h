@@ -4,7 +4,7 @@
 #include <sys/ipc.h>
 #include <sys/sem.h>
 #include <stdio.h>
-
+ 
 #define RIGHTS 0600
 
 /*Datenstruktur zum Abfragen/Setzen der Semaphoren*/

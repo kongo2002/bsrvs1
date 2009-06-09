@@ -1,5 +1,5 @@
 #include "sync.h"
-
+ 
 /*Erzeugt eine neue Semaphore-Menge der Groesse size*/
 int erzeuge_sem(int size,int key)
 {
