@@ -1,0 +1,13 @@
+a.) Für einen Deadlock müssen verschiedene Bedingungen erfüllt sein, mutual exclusion,
+    hold and wait, no preemption und circular wait. Und unsere Kreuzung mit den heranfahrenden
+    Autos erfüllt alle Kriterien, denn ein Auto darf nur weiterfahren, wenn rechts frei ist,
+    es führt stufenweise heran (heranfahren,warten,Kreuzung passieren),und wenn es einmal an der
+    Kreuzung steht und wartet, gibt es keine Möglichkeit den belegten Kreuzungsarm wieder
+    freizugeben, solange der rechte Kreuzungsarm nicht frei ist. Stehen alle vier Autos
+    an der Kreuzung, liegt circular waiting vor, und wir haben einen Deadlock
+ 
+b.) Wir implementieren eine Methode mit einem Sleeptimer, der alle 20 Sekunden überprüft, ob
+    alle vier Kreuzungsarme belegt sind (mittels get_sem). Ist dem so, haben wir einen Deadlock,
+    wenn nicht, ist noch alles in Ordnung.
+ 
+c.)   
