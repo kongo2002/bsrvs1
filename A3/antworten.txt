@@ -5,9 +5,25 @@ a.) Für einen Deadlock müssen verschiedene Bedingungen erfüllt sein, mutual e
     Kreuzung steht und wartet, gibt es keine Möglichkeit den belegten Kreuzungsarm wieder
     freizugeben, solange der rechte Kreuzungsarm nicht frei ist. Stehen alle vier Autos
     an der Kreuzung, liegt circular waiting vor, und wir haben einen Deadlock
- 
+    Grafisch veranschaulichen lässt sich das durch einen Betriebsmittelbelegungsgraphen, welcher
+    darstellt, wie Prozesse Betriebsmittel belegen, und welche Betriebsmittel benötigt werden.
+    Sobald es zu einer kreisförmigen Pfeilanordnung kommt, besteht die Gefahr eines Deadlocks.   
+
 b.) Wir implementieren eine Methode mit einem Sleeptimer, der alle 20 Sekunden überprüft, ob
     alle vier Kreuzungsarme belegt sind (mittels get_sem). Ist dem so, haben wir einen Deadlock,
     wenn nicht, ist noch alles in Ordnung.
  
-c.)   
+c.) Zur Deadlockauflösung existieren verschiedene Möglichkeiten. Zum einen kann man eine
+    Deadlockprevention implementiern, die eine der erstendrei Deadlockbedingungen von vorneherein
+    entkräftigt.
+    Zum anderen kann man eine Deadlockvermeidung versuchen, indem die vierte Deadlockbedingung
+    entkräftigt wird. Hier muss fortlaufend analysiert werden, wie die Betriebsmittelbelegung bald
+    aussehen könnte, und dementsprechend vermieden werden, in einen Zustand zu geraten, der einen
+    Deadlock ermöglicht (sichere-unsichere Zustände).
+    Eine weitere Möglichkeit besteht darin, Deadlocks stillschweigend in Kauf zu nehmen, und
+    fortlaufend zu überprüfen, ob denn inzwischen ein Deadlock aufgetreten ist.
+    Da wir bereits eine Deadlock_observer Methode implementiert haben, würde sich in diesem
+    Fall eine solche Maßnahme anbieten. D.h. sobald ein Deadlock festgestellt wurde, könnte man
+    zufällig ein Auto löschen (in Kreuzungsfall ist ohnehin kein Auto wichtiger, als ein anderes
+    deshalb ist es egal, welches Auto es trifft), um so die freigewordenen Betriebsmittel zur
+    Fortführung des Programms zu verwenden. 
