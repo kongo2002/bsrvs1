@@ -13,6 +13,9 @@ kreuzung: kreuzung.c sync.c sync.h
 kreuzungA: kreuzungA.c sync.c sync.h
 	$(CC) $(CFLAGS) -o kreuzungA kreuzungA.c sync.c
 
+kreuzungB: kreuzungB.c sync.c sync.h
+	$(CC) $(CFLAGS) -o kreuzungB kreuzungB.c sync.c
+
 kreuzung_hard: kreuzung.c sync.c sync.h
 	$(CC) $(CFLAGS) $(CFLAGS_HARD) -o kreuzung kreuzung.c sync.c
 
