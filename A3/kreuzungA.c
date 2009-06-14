@@ -39,7 +39,7 @@ int main()
     
     if (semid == -1)
     {
-        fprintf(stderr, "semaphore already used.\n");
+        fprintf(stderr, "Semaphore noch in Benutzung.\n");
         exit(-1);
     }
 
@@ -58,7 +58,7 @@ int main()
 
 void vater()
 {
-    printf("Vater hat alle 4 Autos erstellt.\n");
+    printf("Vater hat alle %d Autos erstellt.\n", ANZAHL_AUTOS);
 
     while (1)
         sleep(1);
