@@ -10,6 +10,9 @@ CFLAGS_HARD=-Werror -ansi -pedantic -D_XOPEN_SOURCE -D_POSIX_SOURCE
 kreuzung: kreuzung.c sync.c sync.h
 	$(CC) $(CFLAGS) -o kreuzung kreuzung.c sync.c
 
+kreuzungA: kreuzungA.c sync.c sync.h
+	$(CC) $(CFLAGS) -o kreuzungA kreuzungA.c sync.c
+
 kreuzung_hard: kreuzung.c sync.c sync.h
 	$(CC) $(CFLAGS) $(CFLAGS_HARD) -o kreuzung kreuzung.c sync.c
 
