@@ -69,7 +69,7 @@ void vater()
         else
             printf("NO DEADLOCK\n");
 
-        sleep(5);
+        sleep(20);
     }
 }
 
