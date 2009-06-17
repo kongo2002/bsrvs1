@@ -3,7 +3,8 @@
 #include "firstfit.h"
 
 /* die Groesse des Speicherpools in Bytes */
-#define MEM_POOL_SIZE	((unsigned long) (1024*8))	/* 8 Kilobyte */
+/*#define MEM_POOL_SIZE	((unsigned long) (1024*8))*/	/* 8 Kilobyte */
+#define MEM_POOL_SIZE	((unsigned long) (1024*1))	    /* 1 Kilobyte */
 /* 1 Bit in der Freispeicher-Bitliste repraesentiert 16 Bytes im Speicherpool */
 #define CHUNK_SIZE	16
 
@@ -84,9 +85,9 @@ ff_alloc(size_t size)
     j = 0;
 
     /* freie Speicherstelle finden */
-    /* alternativ:
-     * for (i=0; i<sizeof(free_list); ++i) */
-    for (i=0; i<MEM_POOL_SIZE/CHUNK_SIZE/8; ++i)
+    /* alternativ: */
+    for (i=0; i<sizeof(free_list); ++i)
+    /*for (i=0; i<MEM_POOL_SIZE/CHUNK_SIZE/8; ++i)*/
     {
         if (!bit_is_set(free_list, i))
             ++j;
@@ -97,11 +98,12 @@ ff_alloc(size_t size)
         if (j == chunks)
         {
             /* Bitfeld aktualisieren */
-            for (j=i-chunks; j<i; ++j)
+            for (j=i-chunks+1; j<=i; ++j)
                 set_bit(free_list, j);
-
+            
             /* return address */
-            return (void *) (mem_pool + ((i-chunks)*CHUNK_SIZE));
+            return (void *) (mem_pool + ((i-chunks+1)*CHUNK_SIZE));
+        }
     }
 
 	return NULL;
