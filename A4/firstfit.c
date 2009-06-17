@@ -1,0 +1,90 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include "firstfit.h"
+
+/* die Groesse des Speicherpools in Bytes */
+#define MEM_POOL_SIZE	((unsigned long) (1024*8))	/* 8 Kilobyte */
+/* 1 Bit in der Freispeicher-Bitliste repraesentiert 16 Bytes im Speicherpool */
+#define CHUNK_SIZE	16
+
+/* der Speicherpool */
+static char mem_pool[MEM_POOL_SIZE];
+/* die Bitliste, die anzeigt, welche Bloecke frei sind: 1 Bit fuer jew. CHUNK_SIZE Bytes */
+static unsigned char free_list[MEM_POOL_SIZE/CHUNK_SIZE/8];
+
+/* ----------------------------- Hilfsfunktionen ----------------------------- */
+
+/* Funktion zum Debuggen, die die Freispeicher-Bitliste ausgibt */
+#ifdef DEBUG
+static void
+dump_free_mem(void)
+{
+	int i;
+
+	fprintf(stderr, "Freispeicherliste: ");
+	for (i = 0; i < sizeof(free_list); ++i) {
+		if ((i % 32) == 0) {
+			fprintf(stderr, "\n%03X: ", i);
+		}
+		fprintf(stderr, "%02X ", free_list[i]);
+	}
+	fprintf(stderr, "\n");
+}
+#else
+#  define dump_free_mem()
+#endif
+
+/* rechnet aus, wie viele Chunks fuer 'size' Bytes belegt werden muessen
+   (rundet automatisch auf) */
+static size_t
+size_to_chunks(size_t size)
+{
+	if ((size % CHUNK_SIZE) != 0) {
+		return size / CHUNK_SIZE + 1;
+	} else {
+		return size / CHUNK_SIZE;
+	}
+}
+
+/* testet, ob im Bitfeld bitfield das Bit bitnr gesetzt ist:
+ * liefert 0, wenn es nicht gesetzt ist, sonst eine Zahl > 0 */
+static int
+bit_is_set(unsigned char *bitfield, unsigned bitnr)
+{
+	return bitfield[bitnr/8] & (1 << (7 - bitnr % 8));
+}
+
+/* setzt im Bitfeld bitfield das Bit mit der Nummer bitnr */
+static void
+set_bit(unsigned char *bitfield, unsigned bitnr)
+{
+	bitfield[bitnr/8] |= 1 << (7 - bitnr % 8);
+}
+
+/* loescht im Bitfeld bitfield das Bit mit der Nummer bitnr */
+static void
+clear_bit(unsigned char *bitfield, unsigned bitnr)
+{
+	bitfield[bitnr/8] &= ~(1 << (7 - bitnr % 8));
+}
+
+/* ----------------------------- Speicherverwaltung ----------------------------- */
+
+void *
+ff_alloc(size_t size)
+{
+	dump_free_mem();
+
+/* HIER MUESST IHR EIGENEN CODE EINFUEGEN */
+/* UND AUCH DAS "return NULL;" ERSETZEN! */
+
+	return NULL;
+}
+
+void
+ff_free(void *ptr, size_t size)
+{
+	dump_free_mem();
+
+/* HIER MUESST IHR EIGENEN CODE EINFUEGEN */
+}
