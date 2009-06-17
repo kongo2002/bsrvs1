@@ -82,12 +82,16 @@ ff_alloc(size_t size)
     /* benoetigte chunks bestimmen */
     chunks = size_to_chunks(size);
 
+#ifdef DEBUG
+    fprintf(stderr, "%u (%u chunks) angefordert.\n", 
+            (unsigned)size, 
+            (unsigned)chunks);
+#endif
+
     j = 0;
 
     /* freie Speicherstelle finden */
-    /* alternativ: */
     for (i=0; i<sizeof(free_list); ++i)
-    /*for (i=0; i<MEM_POOL_SIZE/CHUNK_SIZE/8; ++i)*/
     {
         if (!bit_is_set(free_list, i))
             ++j;
@@ -100,8 +104,12 @@ ff_alloc(size_t size)
             /* Bitfeld aktualisieren */
             for (j=i-chunks+1; j<=i; ++j)
                 set_bit(free_list, j);
+
+#ifdef DEBUG
+            fprintf(stderr, "Return: Ab Chunk %d\n", i-(int)chunks+1);
+#endif
             
-            /* return address */
+            /* Position zurueckgeben */
             return (void *) (mem_pool + ((i-chunks+1)*CHUNK_SIZE));
         }
     }
