@@ -3,8 +3,7 @@
 #include "firstfit.h"
 
 /* die Groesse des Speicherpools in Bytes */
-/*#define MEM_POOL_SIZE	((unsigned long) (1024*8))*/	/* 8 Kilobyte */
-#define MEM_POOL_SIZE	((unsigned long) (1024*1))	    /* 1 Kilobyte */
+#define MEM_POOL_SIZE	((unsigned long) (1024*8))      /* 8 Kilobyte */
 /* 1 Bit in der Freispeicher-Bitliste repraesentiert 16 Bytes im Speicherpool */
 #define CHUNK_SIZE	16
 
@@ -79,7 +78,7 @@ ff_alloc(size_t size)
 
 	dump_free_mem();
 
-    /* benoetigte chunks bestimmen */
+    /* Anzahl Chunks bestimmen */
     chunks = size_to_chunks(size);
 
 #ifdef DEBUG
@@ -91,7 +90,7 @@ ff_alloc(size_t size)
     j = 0;
 
     /* freie Speicherstelle finden */
-    for (i=0; i<sizeof(free_list); ++i)
+    for (i=0; i<sizeof(free_list)*8; ++i)
     {
         if (!bit_is_set(free_list, i))
             ++j;
@@ -106,7 +105,7 @@ ff_alloc(size_t size)
                 set_bit(free_list, j);
 
 #ifdef DEBUG
-            fprintf(stderr, "Return: Ab Chunk %d\n", i-(int)chunks+1);
+            fprintf(stderr, "Reservieren: Ab Chunk %d\n", i-(int)chunks+1);
 #endif
             
             /* Position zurueckgeben */
@@ -120,7 +119,28 @@ ff_alloc(size_t size)
 void
 ff_free(void *ptr, size_t size)
 {
+    int i;
+    size_t chunks, pos;
+
 	dump_free_mem();
 
-/* HIER MUESST IHR EIGENEN CODE EINFUEGEN */
+    /* Anzahl Chunks bestimmen */
+    chunks = size_to_chunks(size);
+
+#ifdef DEBUG
+    fprintf(stderr, "%u (%u chunks) freizugeben.\n", 
+            (unsigned)size, 
+            (unsigned)chunks);
+#endif
+
+    /* Entsprechende Startposition im Bitfeld */
+    pos = ((char *)ptr - mem_pool) / CHUNK_SIZE;
+
+#ifdef DEBUG
+    fprintf(stderr, "Freigeben: Ab Chunk %d\n", (int)pos);
+#endif
+
+    /* Positionen im Bitfeld freigeben */
+    for (i=pos; i<pos+chunks; ++i)
+        clear_bit(free_list, i);
 }
