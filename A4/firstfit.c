@@ -73,10 +73,36 @@ clear_bit(unsigned char *bitfield, unsigned bitnr)
 void *
 ff_alloc(size_t size)
 {
+    int i, j;
+    size_t chunks;
+
 	dump_free_mem();
 
-/* HIER MUESST IHR EIGENEN CODE EINFUEGEN */
-/* UND AUCH DAS "return NULL;" ERSETZEN! */
+    /* benoetigte chunks bestimmen */
+    chunks = size_to_chunks(size);
+
+    j = 0;
+
+    /* freie Speicherstelle finden */
+    /* alternativ:
+     * for (i=0; i<sizeof(free_list); ++i) */
+    for (i=0; i<MEM_POOL_SIZE/CHUNK_SIZE/8; ++i)
+    {
+        if (!bit_is_set(free_list, i))
+            ++j;
+        else
+            j = 0;
+
+        /* Platz gefunden */
+        if (j == chunks)
+        {
+            /* Bitfeld aktualisieren */
+            for (j=i-chunks; j<i; ++j)
+                set_bit(free_list, j);
+
+            /* return address */
+            return (void *) (mem_pool + ((i-chunks)*CHUNK_SIZE));
+    }
 
 	return NULL;
 }
