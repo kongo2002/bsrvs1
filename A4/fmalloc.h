@@ -3,11 +3,11 @@
 
 #include <stddef.h>
 
-typedef struct size_list
+typedef struct
 {
     size_t size;
     void *ptr;
-}
+} slist;
 
 void *
 fmalloc(size_t size);
