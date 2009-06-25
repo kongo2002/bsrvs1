@@ -4,13 +4,17 @@ Dadurch kann es z.B. dazu kommen, dass ein Speicherblock größer ist, als ihre
 Speichereinheit, und es ist nicht so komfortabel zu verwalten. 
 Bei einer verketteten Liste ist die Speichereinteilung viel flexibler, man
 kann freie oder belegte Segmente direkt ansprechen, und dementsprechend
-einfacher verwalten.
+einfacher verwalten. Auch muss bei einer verketteten Liste nicht jedes Mal
+die komplette Liste durchlaufen werden, um herauszufinden, ob, und wie der 
+Speicher belegt ist. 
 
 1.1.2) Mit der Methode "set_bit" kann man im Bitfeld Speicherbereich als 
 besetzt markieren.Hierzu wird mittels bitnr/8 erst einmal festgelegt welcher 
 Speicherblock angesprochen werden soll. Dann wird die bitnr genommen, und der
 Restwert der bitnr dividiert durch acht wird von sieben abgezogen (unsere 
-Blöcke ja haben eine Größe von acht). Das Ergebnis hiervon zeigt an, um
+Blöcke haben ja eine Größe von acht). Das Ergebnis hiervon zeigt an, um
 wieviele Stellen die eins nach links verschoben werden soll. Die nun neu
 positionierte eins wird mit dem bitfield[bitnr/8] schlussendlich verodert,
-und ergibt das neue bitfield[bitnr/8].
+und ergibt das neue bitfield[bitnr/8]. Durch das setzen der eins in Kombination
+mit der Veroderung wird erreicht, dass das der Speicherbereich, den das bit re-
+präsentiert, als besetzt markiert wird.
