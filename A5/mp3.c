@@ -93,7 +93,7 @@ void idTagDir(const char *dirName, char *comment)
 struct mp3file* bytesToIdTag(char *buffer)
 {
     char *ptr = buffer;
-    struct mp3file mp3 = {0};
+    struct mp3file mp3;
 
     /* Pruefen, ob ID3-Tag hinterlegt */
     if (strncmp("TAG", buffer, 3))
@@ -133,7 +133,13 @@ struct mp3file* bytesToIdTag(char *buffer)
  *				       */
 void printTag(struct mp3file *mp3)
 {
-	/* HIER MUESST IHR EUREN CODE EINFUEGEN */
+    printf("Interpret: %s\n", mp3->interpret);
+    printf("Titel:     %s\n", mp3->titel);
+    printf("Album:     %s\n", mp3->album);
+    printf("Kommentar: %s\n", mp3->kommentar);
+    printf("Jahr:      %s\n", mp3->jahr);
+    printf("Genre:     %s\n", translateGenre(atoi(mp3->genre)));
+    printf("---------------------------------\n");
 }
 
 /* Als Parameter ist entweder ein Integer oder ein Character zulaessig.	   *
