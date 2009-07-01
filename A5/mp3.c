@@ -12,23 +12,49 @@
 
 void idTagFile(const char *fileName,char *comment)
 {
-	/* HIER MUESST IHR EUREN CODE EINFUEGEN */
+    FILE *datei = NULL;
+    struct stat finfo = {0};
+    int rc = 0;
 
+    /* nicht aktuelles oder vorheriges Verzeichnis */
 	if (!strncmp(".", fileName, 2) || !strncmp("..", fileName, 3))
-               	return;
+        return;
 
-	/* HIER MUESST IHR EUREN CODE EINFUEGEN */
+    /* Datei-Eigenschaften auslesen */
+    if ((rc = stat(fileName, &finfo)) == -1)
+    {
+        fprintf(stderr, "Fehler beim Auslesen der Datei: %s\n", fileName);
+        return;
+    }
 	
-	/* Hier ist ein kleiner Codeschnipsel, den ihr in euren Code einbauen sollt,		*
-	 * um an geeigneter Stelle zu ueberpruefen, ob es sich um eine MP3-Datei handelt. 	*
-	 *											*
-	 *	if (strncmp(fileName + strlen(fileName) - 4, ".mp3", 4)) {			*
-	 *		printf("%s: ausgelassen\n", fileName);					*
-	 *		return;									*
-	 *	}										*
-	 *											*/
+    /* Pruefen, ob regulaere Datei */
+    if (!S_ISREG(finfo.st_mode))
+    {
+        fprintf(stderr, "Keine regulaere Datei: %s\n", fileName);
+        return;
+    }
 
-	/* HIER MUESST IHR EUREN CODE EINFUEGEN */
+    /* Pruefen, ob mp3-Datei vorliegend */
+	if (strncmp(fileName + strlen(fileName) - 4, ".mp3", 4))
+    {
+		printf("%s: ausgelassen\n", fileName);
+		return;
+	}
+
+    /* Datei oeffnen */
+    if ((datei = fopen(fileName, "r")) == NULL)
+    {
+        fprintf(stderr, "Fehler beim Oeffnen der Datei: %s\n", fileName);
+        return;
+    }
+
+    /* An die letzten 128 Bytes springen */
+    if (fseek(datei, -ID3_SIZE, SEEK_END) == -1)
+    {
+        fprintf(stderr, "Fehler beim Auslesen des ID3-Tags: %s\n", fileName);
+        fclose(datei);
+        return;
+    }
 }
 
 void idTagDir(const char *dirName, char *comment)
