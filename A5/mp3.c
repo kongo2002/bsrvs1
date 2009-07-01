@@ -77,7 +77,7 @@ void idTagDir(const char *dirName, char *comment)
 	/* HIER MUESST IHR EUREN CODE EINFUEGEN */
 
 	if (!strncmp(".", dirName, 2) || !strncmp("..", dirName, 3))
-               	return;
+        return;
 	
 	/* HIER MUESST IHR EUREN CODE EINFUEGEN */
 
@@ -92,9 +92,40 @@ void idTagDir(const char *dirName, char *comment)
  * wird in einem struct abgelegt.			 */
 struct mp3file* bytesToIdTag(char *buffer)
 {
-	/* HIER MUESST IHR EUREN CODE EINFUEGEN */
+    char *ptr = buffer;
+    struct mp3file mp3 = {0};
 
-	return NULL;
+    /* Pruefen, ob ID3-Tag hinterlegt */
+    if (strncmp("TAG", buffer, 3))
+    {
+        fprintf(stderr, "Kein Tag hinterlegt.\n");
+        return NULL;
+    }
+
+    ptr += 3;
+    strncpy(mp3.titel, ptr, 30);
+    mp3.titel[30] = '\0';
+
+    ptr += 30;
+    strncpy(mp3.interpret, ptr, 30);
+    mp3.interpret[30] = '\0';
+
+    ptr += 30;
+    strncpy(mp3.album, ptr, 30);
+    mp3.album[30] = '\0';
+    
+    ptr += 30;
+    strncpy(mp3.jahr, ptr, 4);
+    mp3.jahr[4] = '\0';
+
+    ptr += 4;
+    strncpy(mp3.kommentar, ptr, 30);
+    mp3.kommentar[30] = '\0';
+
+    ptr += 30;
+    strncpy(mp3.genre, ptr, 1);
+
+    return &mp3;
 }
 /*				       *
  * Es werden die in dem struct mp3file *
