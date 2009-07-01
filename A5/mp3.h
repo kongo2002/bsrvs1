@@ -2,12 +2,12 @@
 #define _MP3_H_
 
 struct mp3file {
-	char interpret[31];
-	char titel[31];
-	char album[31];
-	char kommentar[31];
-	char jahr[5];
-	char genre;
+    char interpret[31];
+    char titel[31];
+    char album[31];
+    char kommentar[31];
+    char jahr[5];
+    char genre;
 };
 
 void idTagFile(const char *,char *);

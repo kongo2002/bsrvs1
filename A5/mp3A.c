@@ -20,7 +20,7 @@ void idTagFile(const char *fileName,char *comment)
     int rc = 0;
 
     /* nicht aktuelles oder vorheriges Verzeichnis */
-	if (!strncmp(".", fileName, 2) || !strncmp("..", fileName, 3))
+    if (!strncmp(".", fileName, 2) || !strncmp("..", fileName, 3))
         return;
 
     /* Datei-Eigenschaften auslesen */
@@ -29,7 +29,7 @@ void idTagFile(const char *fileName,char *comment)
         fprintf(stderr, "Fehler beim Auslesen der Datei: %s\n", fileName);
         return;
     }
-	
+    
     /* Pruefen, ob regulaere Datei */
     if (!S_ISREG(finfo.st_mode))
     {
@@ -38,11 +38,11 @@ void idTagFile(const char *fileName,char *comment)
     }
 
     /* Pruefen, ob mp3-Datei vorliegend */
-	if (strncmp(fileName + strlen(fileName) - 4, ".mp3", 4))
+    if (strncmp(fileName + strlen(fileName) - 4, ".mp3", 4))
     {
-		printf("%s: ausgelassen\n", fileName);
-		return;
-	}
+        printf("%s: ausgelassen\n", fileName);
+        return;
+    }
 
     /* Datei oeffnen */
     if ((datei = fopen(fileName, "r")) == NULL)
@@ -85,22 +85,22 @@ void idTagFile(const char *fileName,char *comment)
 
 void idTagDir(const char *dirName, char *comment)
 {
-	/* HIER MUESST IHR EUREN CODE EINFUEGEN */
+    /* HIER MUESST IHR EUREN CODE EINFUEGEN */
 
-	if (!strncmp(".", dirName, 2) || !strncmp("..", dirName, 3))
+    if (!strncmp(".", dirName, 2) || !strncmp("..", dirName, 3))
         return;
-	
-	/* HIER MUESST IHR EUREN CODE EINFUEGEN */
+    
+    /* HIER MUESST IHR EUREN CODE EINFUEGEN */
 
-	printf("%s: Betrete Verzeichnis ...\n", dirName);
+    printf("%s: Betrete Verzeichnis ...\n", dirName);
 
-	/* HIER MUESST IHR EUREN CODE EINFUEGEN */
+    /* HIER MUESST IHR EUREN CODE EINFUEGEN */
 
-	printf("%s: Verlasse Verzeichnis ...\n", dirName);
+    printf("%s: Verlasse Verzeichnis ...\n", dirName);
 }
 
 /* Die Informationen im Puffer, auf den buffer verweist, * 
- * wird in einem struct abgelegt.			 */
+ * wird in einem struct abgelegt.            */
 struct mp3file* bytesToIdTag(char *buffer)
 {
     char *ptr = buffer;
@@ -144,10 +144,10 @@ struct mp3file* bytesToIdTag(char *buffer)
 
     return mp3;
 }
-/*				       *
+/*                     *
  * Es werden die in dem struct mp3file *
  * abgelegten Informationen ausgegeben *
- *				       */
+ *                     */
 void printTag(struct mp3file *mp3)
 {
     printf("Interpret: %s\n", mp3->interpret);
@@ -159,7 +159,7 @@ void printTag(struct mp3file *mp3)
     printf("---------------------------------\n");
 }
 
-/* Als Parameter ist entweder ein Integer oder ein Character zulaessig.	   *
+/* Als Parameter ist entweder ein Integer oder ein Character zulaessig.    *
  * Die Funktion wandelt den Code fuer ein Genre in einen lesbaren Text um. */
 const char *genres[] = {"Blues",
                         "Classic Rock",
@@ -244,9 +244,8 @@ const char *genres[] = {"Blues",
                         "Folk"};
 const char *translateGenre(int genre_id)
 {
-	if (genre_id >= 0 && genre_id <= 80) {
-		return genres[genre_id];
-	} else {
-		return "undefined";
-	}
+    if (genre_id >= 0 && genre_id <= 80)
+        return genres[genre_id];
+    else
+        return "undefined";
 }
