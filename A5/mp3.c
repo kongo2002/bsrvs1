@@ -16,6 +16,7 @@ void idTagFile(const char *fileName,char *comment)
     struct mp3file *mfile = NULL;
     struct stat finfo = {0};
     char buf[128];
+    size_t rb = 0;
     int rc = 0;
 
     /* nicht aktuelles oder vorheriges Verzeichnis */
@@ -59,12 +60,16 @@ void idTagFile(const char *fileName,char *comment)
     }
 
     /* Tag auslesen */
-    if (fread(buf, sizeof(char), ID3_SIZE, datei) == 0)
+    if ((rb = fread(buf, sizeof(char), ID3_SIZE, datei)) == 0)
     {
         fprintf(stderr, "Fehler beim Lesen der Datei: %s\n", fileName);
         fclose(datei);
         return;
     }
+
+#ifdef DEBUG
+        fprintf(stderr, "%d Bytes erfolgreich gelesen.\n", (int)rb);
+#endif
 
     /* Tags parsen und printen */
     if ((mfile = bytesToIdTag(buf)) != NULL)
