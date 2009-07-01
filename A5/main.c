@@ -4,7 +4,9 @@
 
 int main(int argc, char **argv)
 {
-    int i;
+    int i, j, modify = 0;
+    char buffer[31];
+    char tmp;
 
     if (argc < 2)
     {
@@ -12,8 +14,25 @@ int main(int argc, char **argv)
         return 1;
     }
 
-    for (i = 1; i < argc; i++)
+    /* Kommentar modifizieren? */
+    if (!strncmp("--modify", argv[1], 8))
+        modify = 1;
+
+    /* Dateien/Verzeichnisse durchlaufen */
+    for (i = modify+1; i < argc; i++)
     {
+        if (modify)
+        {
+            j = 0;
+            while (((tmp = getchar()) != '\n') && j < 31)
+            {
+                if (tmp != '\n')
+                    buffer[j++] = tmp;
+            }
+
+            buffer[j] = '\0';
+            printf("buffer = %s\n", buffer);
+        }
         idTagFile(argv[i], NULL);
     }
 
