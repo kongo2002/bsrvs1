@@ -118,6 +118,12 @@ void idTagDir(const char *dirName, char *comment)
     {
         if (strncmp(".", ent->d_name, 2) && strncmp("..", ent->d_name, 3))
         {
+            if ((strlen(dirName) + strlen(ent->d_name)) >= 255)
+            {
+                fprintf(stderr, "Dateiname zu lang.\n");
+                continue;
+            }
+
             sprintf(fileName, "%s/%s", dirName, ent->d_name);
 
             idTagFile(fileName, NULL);
