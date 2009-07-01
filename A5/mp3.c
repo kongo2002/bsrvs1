@@ -67,6 +67,9 @@ void idTagFile(const char *fileName,char *comment)
         return;
     }
 
+    /* Datei-Handle schliessen */
+    fclose(datei);
+
 #ifdef DEBUG
         fprintf(stderr, "%d Bytes erfolgreich gelesen.\n", (int)rb);
 #endif
@@ -242,6 +245,7 @@ const char *genres[] = {"Blues",
                         "Rock & Roll",
                         "Hard Rock",
                         "Folk"};
+
 const char *translateGenre(int genre_id)
 {
     if (genre_id >= 0 && genre_id <= 80)
