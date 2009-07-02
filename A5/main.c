@@ -27,7 +27,8 @@ int main(int argc, char **argv)
 
             while (j < 31 && ((buffer[j++] = getchar()) != '\n'));
 
-            buffer[--j] = '\0';
+            for (j=j-1; j<31; j++)
+                buffer[j] = '\0';
 
             idTagFile(argv[i], buffer);
         }
