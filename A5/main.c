@@ -23,7 +23,7 @@ int main(int argc, char **argv)
         if (modify)
         {
             j = 0;
-            printf("Geben Sie den neuen Kommentar ein: ");
+            printf("%s: Geben Sie den neuen Kommentar ein: ", argv[i]);
 
             while (j < 31 && ((buffer[j++] = getchar()) != '\n'));
 
