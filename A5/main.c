@@ -13,7 +13,7 @@ int main(int argc, char **argv)
         return 1;
     }
 
-    /* Kommentar modifizieren? */
+    /* ID3-Tag modifizieren? */
     if (!strncmp("--modify", argv[1], 8))
         modify = 1;
 
@@ -28,9 +28,11 @@ int main(int argc, char **argv)
             while (j < 31 && ((buffer[j++] = getchar()) != '\n'));
 
             buffer[--j] = '\0';
-            printf("buffer = %s\n", buffer);
+
+            idTagFile(argv[i], buffer);
         }
-        idTagFile(argv[i], NULL);
+        else
+            idTagFile(argv[i], NULL);
     }
 
     return 0;
