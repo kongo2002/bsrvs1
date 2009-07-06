@@ -3,7 +3,7 @@ Die zwei Punkte hintereinander ".." führen zum unmittelbaren Elterverzeichnis, 
 Verzeichnis, welches sich in der Ordnerstruktur unmittelbar über dem aktuellen
 Verzeichnis befindet.
 
-2.Blockorientierte Geräte, wie z.b. Festplatten, CD-Rom Laufwerke und Diskettenlaufwerke
+2. Blockorientierte Geräte, wie z.b. Festplatten, CD-Rom Laufwerke und Diskettenlaufwerke
 übertragen Daten in Blöcken von Daten, und sind in der Lage den Puffer des Betriebssystems 
 zu nutzen. Eine parallele Datenübertragung ist möglich.
 Zeichenorientierte Geräte, wie z.b. Mäuse, Tastaturen, Drucker etc. übertragen nur ein Zeichen 
